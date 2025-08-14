@@ -1,0 +1,37 @@
+/* Mapear selectores existentes a Tailwind sin cambiar HTML */
+body { @apply bg-slate-900 text-slate-100; }
+.container { @apply max-w-7xl mx-auto px-4; }
+
+/* Si usabas .action-button */
+.action-button { @apply btn; }
+
+/* Botones globales */
+button { @apply btn; }
+button.admin-only { @apply btn-ghost; }
+
+/* Inputs globales */
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="email"],
+select,
+textarea { @apply input; }
+
+/* Tablas */
+table { @apply table; }
+table th { @apply text-left font-semibold text-slate-300 border-b border-slate-700 pb-2; }
+table td { @apply py-2 border-b border-slate-800; }
+
+/* Clases existentes que vimos en styles.css */
+.spinner { @apply animate-spin inline-block h-6 w-6 border-2 border-slate-500 border-t-transparent rounded-full; }
+.modal { @apply modal; }
+.modal-content { @apply modal-content; }
+.hidden { @apply hidden; }
+.close { @apply cursor-pointer text-slate-400 hover:text-white; }
+
+header { @apply sticky top-0 z-40 backdrop-blur bg-slate-900/70 border-b border-slate-800; }
+section, .panel, .box { @apply card; }
+form { @apply grid gap-3; }
+.grid-2 { @apply grid grid-cols-1 md:grid-cols-2 gap-4; }
+.grid-3 { @apply grid grid-cols-1 md:grid-cols-3 gap-4; }
+.grid-4 { @apply grid grid-cols-1 md:grid-cols-4 gap-4; }

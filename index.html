@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS1.0.3</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="license.js"></script>
+
+
+  <script type="module" src="/src/main.js"></script>
+</head>
+     
+<body>
+
+  
+<button id="logoutBtn" style="position:absolute; top:10px; right:10px;">
+  Cerrar sesión
+</button>
+    
+<div class="container">
+        <div class="header" style="position: relative; text-align: center; margin-bottom: 20px;">
+            <h1>LOGOTIPO</h1>
+<img src="https://despensas-margarita.vercel.app/despensa.jfif" alt="Fondo" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100%; height: 100px; object-fit: cover; z-index: 1; opacity: 0.5;">
+            
+        </div>
+ 
+
+    <section>
+         
+  <h2>Apertura de Caja</h2>
+  <input type="number" id="opening-cash" placeholder="Monto inicial">
+  <button onclick="setOpeningCash()">Iniciar Caja</button>
+</section>
+
+       <section id="product-form">
+    <input type="text" id="product-code" placeholder="Código de Barras">
+    <input type="text" id="product-name" placeholder="Nombre del Producto">
+    <input type="number" id="product-price" placeholder="Precio">
+           <!-- Campo nuevo para precio de costo -->
+<div>
+  <label for="product-cost">Costo del producto:</label>
+  <input type="number" step="0.01" id="product-cost" placeholder="Ej: 100.00">
+</div>
+
+ <label for="product-unit">Tipo de unidad:</label>
+<select id="product-unit">
+  <option value="unidad">Unidad</option>
+  <option value="kg">Kilogramo</option>
+  <option value="litro">Litro</option>
+</select>
+
+
+
+
+
+    <input type="number" id="product-quantity" placeholder="Cantidad" min="1"> <!-- Campo de cantidad -->
+          
+   
+    <button class="admin-only" onclick="addProduct()">Agregar Producto</button>
+</section>
+
+
+        <section id="product-search">
+            <input type="text" id="search-code" placeholder="Buscar por Código">
+            <button onclick="searchProduct()">Buscar</button>
+        </section>
+
+        <div id="product-result"></div>
+
+        <section id="checkout">
+            <h2>Escanear Productos</h2>
+            <input type="text" id="scan-code" placeholder="Escanear Código">
+            <button onclick="scanProduct()">Añadir al Carrito</button>
+            <ul id="cart"></ul>
+            <p>Total: $<span id="total-price">0.00</span></p>
+
+         
+
+<div>
+
+  <button onclick="finalizeSale('efectivo')">Pago en Efectivo</button>
+  <button onclick="finalizeSale('transferencia')">Pago Transferido</button>
+  <button onclick="asignarAVentaCliente()">Asignar a Cliente</button>
+
+</div>
+
+
+
+            
+        </section>
+    
+
+
+    
+     <div style="text-align: center;">
+            <button class="admin-only" class="action-button" onclick="consultarTotalVendido()" style="padding: 5px 10px; font-size: 0.9em; border-radius: 15px; background-color: #007bff; color: white; margin: 5px; border: none; cursor: pointer;">Consultar Total Vendido</button>
+<button class="admin-only" class="action-button"
+        onclick="limpiarTotalVendido()"
+        style="display: none; padding: 5px 10px; font-size: 0.9em; border-radius: 15px; background-color: #dc3545; color: white; margin: 5px; border: none; cursor: pointer;">
+  Limpiar Total Vendido
+</button>
+
+     
+     </div>
+    
+<div id="ventas-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Detalle de Productos Vendidos</h2>
+        <ul id="ventas-detalle" style="display: none;"></ul>
+        <p>Total Vendido: $<span id="total-vendido-modal" style="display: none;">0.00</span></p>
+
+<section>
+  <h2>Arqueo de Caja</h2>
+  <button onclick="showSalesSummary()">Mostrar Arqueo</button>
+  <textarea id="sales-summary" rows="15" style="width:100%; margin-top:10px;"></textarea><br>
+  <button onclick="downloadSummary()">Descargar TXT</button>
+  <button onclick="resetDay()">Limpiar Total Vendido</button>
+  <button onclick="verArqueoMensual()">Arqueo Mensual</button>
+
+</section>
+
+
+
+        
+        <button onclick="downloadVentas()">Descargar Detalle</button>
+    </div>
+</div>
+
+
+
+
+
+
+
+    
+
+      <div>
+        <input type="file" id="fileInput" accept=".txt">
+        <button class="admin-only" onclick="loadProducts()">Cargar Productos</button>
+        <button class="admin-only" onclick="downloadProducts()">Descargar Productos</button>
+
+    </div>                     
+
+<button onclick="abrirModalClientes()">🗂 Clientes</button>
+
+
+    
+        <section id="product-list">
+            <h2>Lista de Productos</h2>
+            <ul id="products"></ul>
+        </section>
+
+    
+    </div>
+
+ <div style="
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 8px 10px;
+  border-radius: 10px;
+  z-index: 1000;
+  font-family: sans-serif;
+  font-size: 0.75em;
+  width: 200px;
+  text-align: left;
+  box-shadow: 0 0 6px rgba(0,0,0,0.4);
+">
+  <p style="margin: 0; font-weight: bold;">👨‍💻 Horacio Dev</p>
+  <p style="margin: 0;">
+    <a href="https://wa.me/542617048835" target="_blank" style="color: #25D366; text-decoration: none;">
+      🟢 WhatsApp: 261 704 8835
+    </a>
+  </p>
+  <p style="margin: 0;">✉️ horacio.dev.sol@gmail.com</p>
+  <hr style="margin: 6px 0; border-color: #555;">
+  <p style="margin: 4px 0;">🛠 Mejoras:</p>
+  <ul style="padding-left: 15px; margin: 0;">
+    <li style="margin-bottom: 3px;">Login Admin – <strong>$15.000</strong></li>
+    <li style="margin-bottom: 3px;">Clientes – <strong>$12.000</strong></li>
+    <li>pantalla cliente – <strong>$11.000</strong></li>
+    <li>Sumar otro equipo – <strong>$40.000 (presencial)</strong></li>
+  </ul>
+</div>
+
+
+<div id="loading-screen">
+    <div class="spinner"></div>
+    <img src="https://despensas-margarita.vercel.app/despensa.jfif" alt="Imagen de Carga" id="loading-image">
+</div>
+  
+
+
+<!-- ────────────────────────── MODAL CLIENTES ────────────────────────── -->
+<div id="modal-clientes" class="modal" style="display:none;">
+  <div class="modal-content" style="max-width:600px;">
+    <span class="close" onclick="cerrarModalClientes()">&times;</span>
+    <h2>Gestión de Clientes</h2>
+
+    <!-- Formulario alta / edición -->
+    <form id="form-cliente" onsubmit="guardarCliente(event)">
+      <input type="hidden" id="cliente-id">
+      <input type="text"  id="cliente-nombre"   placeholder="Nombre"   required>
+      <input type="text"  id="cliente-telefono" placeholder="Teléfono">
+      <button type="submit">Guardar</button>
+    </form>
+
+    <!-- Tabla listado -->
+    <table style="width:100%; margin-top:15px; text-align:left;">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Teléfono</th>
+          <th>Deuda</th>
+          <th>Acciones</th>
+          <th>Detalle</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-clientes">
+        <!--
+          Cada fila la produces dinámicamente desde tu script.
+          Ejemplo de celda “Detalle” que dispara el modal:
+          <td>
+            <button class="btn-detalle" onclick="abrirDetalleCliente('ID_DEL_CLIENTE')">
+              Ver historial
+            </button>
+          </td>
+        -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ──────────────── MODAL DETALLE HISTORIAL DE VENTAS ──────────────── -->
+<div id="modal-detalle-cliente" class="modal" style="display:none;">
+  <div class="modal-content" style="max-width:700px;">
+    <span class="close" onclick="cerrarModalDetalleCliente()">&times;</span>
+    <!-- El nombre del cliente se inserta dinámicamente -->
+    <h2 id="detalle-nombre-cliente">Historial de ventas</h2>
+
+    <table style="width:100%; text-align:left;">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Total $</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-detalle-cliente">
+        <!--
+          Aquí tu script inyectará filas así:
+          <tr>
+            <td>28/06/2025</td>
+            <td>17:42</td>
+            <td>Producto X</td>
+            <td>3</td>
+            <td>4500</td>
+          </tr>
+        -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ───────────────────────────────────────────────────────────────────── -->
+
+
+    <script src="scripts.js"></script>
+    <script src="emisor-cliente.js"></script> <!-- 👉 nuevo -->
+    <script src="clientes.js"></script>        <!-- NUEVO -->
+    <script src="arqueo-mensual.js"></script>  <!-- NUEVO -->
+
+</body>
+</html>
