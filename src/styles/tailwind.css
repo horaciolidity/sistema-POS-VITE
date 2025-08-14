@@ -38,6 +38,7 @@
   }
   .table td { @apply py-2 border-b border-slate-800; }
 
-  .modal { @apply fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4; }
-  .modal-content { @apply w-full max-w-2xl rounded-2xl bg-slate-900 border border-slate-800 p-6; }
+  /* Renombradas para evitar ciclo */
+  .tw-modal { @apply fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4; }
+  .tw-modal-content { @apply w-full max-w-2xl rounded-2xl bg-slate-900 border border-slate-800 p-6; }
 }

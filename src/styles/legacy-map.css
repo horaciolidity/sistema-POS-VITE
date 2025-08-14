@@ -24,8 +24,11 @@ table td { @apply py-2 border-b border-slate-800; }
 
 /* Clases existentes que vimos en styles.css */
 .spinner { @apply animate-spin inline-block h-6 w-6 border-2 border-slate-500 border-t-transparent rounded-full; }
-.modal { @apply modal; }
-.modal-content { @apply modal-content; }
+
+/* Usar las clases nuevas para evitar ciclo */
+.modal { @apply tw-modal; }
+.modal-content { @apply tw-modal-content; }
+
 .hidden { @apply hidden; }
 .close { @apply cursor-pointer text-slate-400 hover:text-white; }
 
