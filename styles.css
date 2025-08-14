@@ -306,9 +306,9 @@ ul li:hover {
 
 
 
-input[type="number"],
-{
-    color: black;
+/* Inputs */
+input[type="number"] {
+  color: black;
 }
 
 input[type="password"],
@@ -317,14 +317,16 @@ select {
   border: 1px solid #999;
   color: black;
 }
-input[type="text"],
-{
-    color: black;
+
+input[type="text"] {
+  color: black;
 }
+
 /* Placeholder más oscuro */
 input::placeholder {
   color: #666;
 }
+
 
 /* Botones principales */
 button {
